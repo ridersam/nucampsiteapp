@@ -3,16 +3,17 @@ import Constants from 'expo-constants';
 import CampsiteInfoScreen from './CampsiteInfoScreen';
 import DirectoryScreen from './DirectoryScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import { 
-    createDrawerNavigator, 
-    DrawerContentScrollView, 
-    DrawerItemList 
+import {
+    createDrawerNavigator,
+    DrawerContentScrollView,
+    DrawerItemList
 } from '@react-navigation/drawer';
 import HomeScreen from './HomeScreen';
 import AboutScreen from './AboutScreen';
 import ContactScreen from './ContactScreen';
+import ReservationScreen from './ReservationScreen';
 import { Icon } from 'react-native-elements';
-import logo from'../assets/images/logo.png';
+import logo from '../assets/images/logo.png';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchPartners } from '../features/partners/partnersSlice';
@@ -128,6 +129,29 @@ const ContactNavigator = () => {
     );
 };
 
+const ReservationNavigator = () => {
+    const Stack = createStackNavigator();
+    return (
+        <Stack.Navigator screenOptions={screenOptions}>
+            <Stack.Screen
+                name='Reservation'
+                component={ReservationScreen}
+                options={({ navigation }) => ({
+                    title: 'Reservation Search',
+                    headerLeft: () => (
+                        <Icon
+                            name='tree'
+                            type='font-awesome'
+                            iconStyle={styles.stackIcon}
+                            onPress={() => navigation.toggleDrawer()}
+                        />
+                    )
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
+
 const CustomDrawerContent = (props) => (
     <DrawerContentScrollView {...props}>
         <View style={styles.drawerHeader}>
@@ -145,12 +169,12 @@ const CustomDrawerContent = (props) => (
 const Main = () => {
     const dispatch = useDispatch();
 
-useEffect(() => {
-    dispatch(fetchCampsites());
-    dispatch(fetchPromotions());
-    dispatch(fetchPartners());
-    dispatch(fetchComments());
-}, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchCampsites());
+        dispatch(fetchPromotions());
+        dispatch(fetchPartners());
+        dispatch(fetchComments());
+    }, [dispatch]);
 
     return (
         <View
@@ -168,9 +192,9 @@ useEffect(() => {
                 <Drawer.Screen
                     name='Home'
                     component={HomeNavigator}
-                    options={{ 
+                    options={{
                         title: 'Home',
-                        drawerIcon: ({color}) => (
+                        drawerIcon: ({ color }) => (
                             <Icon
                                 name='home'
                                 type='font-awesome'
@@ -184,11 +208,27 @@ useEffect(() => {
                 <Drawer.Screen
                     name='Directory'
                     component={DirectoryNavigator}
-                    options={{ 
+                    options={{
                         title: 'Campsite Directory',
-                        drawerIcon: ({color}) => (
+                        drawerIcon: ({ color }) => (
                             <Icon
                                 name='list'
+                                type='font-awesome'
+                                size={24}
+                                iconStyle={{ width: 24 }}
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Drawer.Screen
+                    name='ReserveCampsite'
+                    component={ReservationNavigator}
+                    options={{
+                        title: 'Reserve Campsite',
+                        drawerIcon: ({ color }) => (
+                            <Icon
+                                name='tree'
                                 type='font-awesome'
                                 size={24}
                                 iconStyle={{ width: 24 }}
@@ -202,7 +242,7 @@ useEffect(() => {
                     component={AboutNavigator}
                     options={{
                         title: 'About',
-                        drawerIcon: ({color}) => (
+                        drawerIcon: ({ color }) => (
                             <Icon
                                 name='info-circle'
                                 type='font-awesome'
@@ -216,9 +256,9 @@ useEffect(() => {
                 <Drawer.Screen
                     name='Contact'
                     component={ContactNavigator}
-                    options={{ 
+                    options={{
                         title: "Contact Us",
-                        drawerIcon: ({color}) => (
+                        drawerIcon: ({ color }) => (
                             <Icon
                                 name='address-card'
                                 type='font-awesome'
