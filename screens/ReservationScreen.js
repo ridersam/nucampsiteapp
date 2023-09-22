@@ -1,9 +1,15 @@
-import { useState } from "react";
-import { Text, View, ScrollView, StyleSheet, Switch, Button, Modal } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { Platform } from "react-native";
-
+import { useState } from 'react';
+import {
+    Text,
+    View,
+    ScrollView,
+    StyleSheet,
+    Switch,
+    Button,
+    Modal
+} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ReservationScreen = () => {
     const [campers, setCampers] = useState(1);
@@ -19,9 +25,9 @@ const ReservationScreen = () => {
     };
 
     const handleReservation = () => {
-        console.log('campers' , campers);
-        console.log('hikeIn' , hikeIn);
-        console.log('date' , date);
+        console.log('campers:', campers);
+        console.log('hikeIn:', hikeIn);
+        console.log('date:', date);
         setShowModal(!showModal);
     };
 
@@ -41,17 +47,17 @@ const ReservationScreen = () => {
                     selectedValue={campers}
                     onValueChange={(itemValue) => setCampers(itemValue)}
                 >
-                    <Picker.Item label="1" value={1} />
-                    <Picker.Item label="2" value={2} />
-                    <Picker.Item label="3" value={3} />
-                    <Picker.Item label="4" value={4} />
-                    <Picker.Item label="5" value={5} />
-                    <Picker.Item label="6" value={6} />
+                    <Picker.Item label='1' value={1} />
+                    <Picker.Item label='2' value={2} />
+                    <Picker.Item label='3' value={3} />
+                    <Picker.Item label='4' value={4} />
+                    <Picker.Item label='5' value={5} />
+                    <Picker.Item label='6' value={6} />
                 </Picker>
             </View>
             <View style={styles.formRow}>
-                <Text style={styles.formLabel}>Hike in?</Text>
-                <Switch 
+                <Text style={styles.formLabel}>Hike In?</Text>
+                <Switch
                     style={styles.formItem}
                     value={hikeIn}
                     trackColor={{ true: '#5637DD', false: null }}
@@ -60,32 +66,32 @@ const ReservationScreen = () => {
             </View>
             <View style={styles.formRow}>
                 <Text style={styles.formLabel}>Date:</Text>
-                <Button 
+                <Button
                     onPress={() => setShowCalendar(!showCalendar)}
                     title={date.toLocaleDateString('en-US')}
                     color='#5637DD'
-                    accessibilityLabel="Tap me to select a reservation date"
+                    accessibilityLabel='Tap me to select a reservation date'
                 />
             </View>
             {showCalendar && (
-                <DateTimePicker 
+                <DateTimePicker
                     style={styles.formItem}
                     value={date}
-                    mode="date"
-                    display="default"
+                    mode='date'
+                    display='default'
                     onChange={onDateChange}
                 />
             )}
             <View style={styles.formRow}>
-                <Button 
+                <Button
                     onPress={() => handleReservation()}
-                    title="Search Availability"
+                    title='Search Availability'
                     color='#5637DD'
-                    accessibilityLabel="Tap me to search for available campsites to reserve"
+                    accessibilityLabel='Tap me to search for available campsites to reserve'
                 />
             </View>
             <Modal
-                animationType="slide"
+                animationType='slide'
                 transparent={false}
                 visible={showModal}
                 onRequestClose={() => setShowModal(!showModal)}
@@ -103,13 +109,13 @@ const ReservationScreen = () => {
                     <Text style={styles.modalText}>
                         Date: {date.toLocaleDateString('en-US')}
                     </Text>
-                    <Button 
+                    <Button
                         onPress={() => {
                             setShowModal(!showModal);
                             resetForm();
                         }}
                         color='#5637DD'
-                        title="Close"
+                        title='Close'
                     />
                 </View>
             </Modal>
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
         margin: 20
     },
     formLabel: {
-        fontSize: 20,
+        fontSize: 18,
         flex: 2
     },
     formItem: {
@@ -137,7 +143,7 @@ const styles = StyleSheet.create({
         margin: 20
     },
     modalTitle: {
-        fontSize:24,
+        fontSize: 24,
         fontWeight: 'bold',
         backgroundColor: '#5637DD',
         textAlign: 'center',
@@ -148,6 +154,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         margin: 10
     }
-}) 
+});
 
 export default ReservationScreen;
