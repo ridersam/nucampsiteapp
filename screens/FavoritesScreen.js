@@ -5,6 +5,7 @@ import Loading from '../components/LoadingComponent';
 import { baseUrl } from "../shared/baseUrl";
 import { SwipeRow } from "react-native-swipe-list-view";
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
+import * as Animatable from "react-native-animatable";
 
 const FavoritesScreen = ({ navigation }) => {
     const { campsitesArray, isLoading, errMess } = useSelector((state) => state.campsites);
@@ -16,7 +17,7 @@ const FavoritesScreen = ({ navigation }) => {
             <SwipeRow rightOpenValue={-100}>
                 <View style={styles.deleteView}>
                     <TouchableOpacity
-                        style={styles.deleteTouchable} 
+                        style={styles.deleteTouchable}
                         onPress={() => Alert.alert('Delete Favorite?',
                             'Are you sure you wish to the delete the favorite campsite ' + campsite.name + '?',
                             [
@@ -67,13 +68,18 @@ const FavoritesScreen = ({ navigation }) => {
         );
     }
     return (
-        <FlatList
-            data={campsitesArray.filter((campsite) =>
-                favorites.includes(campsite.id)
-            )}
-            renderItem={renderFavoriteItem}
-            keyExtractor={(item) => item.id.toString()}
-        />
+        <Animatable.View
+            animation='fadeInRightBig'
+            duration={2000}
+        >
+            <FlatList
+                data={campsitesArray.filter((campsite) =>
+                    favorites.includes(campsite.id)
+                )}
+                renderItem={renderFavoriteItem}
+                keyExtractor={(item) => item.id.toString()}
+            />
+        </Animatable.View>
     )
 };
 
