@@ -10,13 +10,14 @@ const RenderCampsite = (props) => {
     const view = useRef();
 
     const isLeftSwipe = ({ dx }) => dx < -200;
+    const isRightSwipe = ({ dx }) => dx > 200;
 
-    const panResponder = PanResponder.create({ 
+    const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
             view.current
                 .rubberBand(1000)
-                .then((endState) => 
+                .then((endState) =>
                     console.log(endState.finished ? 'finished' : 'canceled')
                 );
         },
@@ -29,18 +30,20 @@ const RenderCampsite = (props) => {
                     [
                         {
                             text: 'Cancel',
-                            stlye: 'cancel',
+                            style: 'cancel',
                             onPress: () => console.log('Cancel Pressed')
                         },
                         {
                             text: 'Okay',
                             onPress: () => props.isFavorite
-                            ? console.log('Already set as a favorite')
-                            : props.markFavorite()
+                                ? console.log('Already set as a favorite')
+                                : props.markFavorite()
                         }
                     ],
                     { cancelable: false }
                 );
+            } else if (isRightSwipe(gestureState)) {
+                props.onShowModal()
             }
         }
     })
